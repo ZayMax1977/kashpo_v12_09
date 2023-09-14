@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ждем Вас!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap-->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <!-- Custom styles -->
+
+    <link rel="stylesheet" href="{% static 'css/wellcome-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar_footer_origen.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    {% block style %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+</head>
+<body>
+<div class="wrapper">
+        <div class="wrapper-content">
+
+{% include 'home/navbar.html' %}
+{% block content %}
+  {% endblock %}
+    </div>
+
+</div>
+{% include 'home/footer.html' %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+</html>

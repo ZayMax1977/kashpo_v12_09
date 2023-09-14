@@ -1,0 +1,21 @@
+.myAccountList li{
+    min-height:120px;
+}
+.profile-item2{
+    padding-top:20px;
+}
+.profile-item2  span{
+display:inline-block;
+
+}
+.profile-item2  img{
+padding-bottom:15px;
+}
+
+@media (min-width: 570px) {
+profile-item{
+    min-height:130px;
+    color:red;
+}
+
+}

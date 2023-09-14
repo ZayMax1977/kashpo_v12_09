@@ -1,0 +1,66 @@
+<div class="col-lg-3">
+    <form method="POST"  action="{% url 'basket_adding' %}" id="form_id_small_card_{{p_i.product.id}}">
+        {% csrf_token %}
+        <div class="product-item">
+            <div>
+                <a href="{% url 'product' p_i.product.id %}">
+                    <img src="{{ p_i.image.url }}" class="img-fluid" width="180" height="240">
+                </a>
+            </div>
+
+
+            {% if p_i.product.discount %}
+            <div class="discount-container">
+                <span>- {{p_i.product.discount}} %</span>
+            </div>
+            {% endif %}
+            <h4>{{ p_i.product.name }}</h4>
+            <p>
+                {{ p_i.product.description|truncatechars_html:35 }}
+            </p>
+            <div class="row field-depart">
+                <div class="col-lg-10 col-sm-10 col-xs-10">
+                    <label for="number_small_card_{{p_i.product.id}}" class="card-label-color">Выберите количество:</label>
+
+                    <input type="number" class="form-control" name="number_small_card" id="number_small_card_{{p_i.product.id}}"
+                           value="1" >
+                </div>
+            </div>
+            <div class="row field-depart">
+                <div class="col-lg-10 col-sm-10 col-xs-10 form-group">
+                    <label for="product_color_small_card_{{p_i.product.id}}" class="card-label-color">Выберите цвет:</label>
+
+                    <select name="product-color" id="product_color_small_card_{{p_i.product.id}}" class="form-control">
+                        <option value="5">Любой</option>
+                        <option value="4">Индийское дерево</option>
+                        <option value="3">Венге</option>
+                        <option value="2">Бронза</option>
+                        <option value="1">Белый</option>
+
+                    </select></div>
+            </div>
+
+
+            <div>
+                {{ p_i.product.price }} RUB
+                {% if p_i.product.discount > 0 %}<span class="strikeout_price
+
+">{{ p_i.product.price_without_discount }} RUB</span>{% endif %}
+            </div>
+            <div class="add-to-card-btn">
+                <button class="btn btn-warning btn-card submit_btn btn-add-to-card"
+
+                        data-product_id='{{  p_i.product.id }}'
+                        data-product_name='{{  p_i.product.name }}'
+                        data-product_price='{{  p_i.product.price }}'
+                        data-form_id="form_id_small_card_{{p_i.product.id}}"
+                        data-product_image='{{ p_i.image.url }}'>
+
+                    Добавить в корзину
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+<!--button-main-page-product-card-->

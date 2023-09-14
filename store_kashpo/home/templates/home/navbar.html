@@ -1,0 +1,200 @@
+<!-- Fixed navbar start -->
+<div class="navbar navbar-tshop navbar-fixed-top megamenu nav-dev" role="navigation">
+    <div class="navbar-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
+                    <div class="pull-left ">
+                        <ul class="userMenu ">
+                            <li><a href="#"> <span class="hidden-xs">HELP</span><i
+                                    class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a></li>
+                            <li class="phone-number">
+                                <a href="callto:+12025550151">
+                                    <span> <i class="glyphicon glyphicon-phone-alt "></i></span>
+                                    <span class="hidden-xs" style="margin-left:5px"> +1-202-555-0151 </span> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
+                    <div class="pull-right">
+                        <ul class="userMenu">
+                            <li><a href=""><span class="hidden-xs"> Профиль</span> <i
+                                    class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
+                            <li><a href="" > <span class="hidden-xs">Вход
+                            </span>
+                                <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a></li>
+                            <li class="hidden-xs"><a href="" > Регистрация
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.navbar-top-->
+
+<!-- Малая корзина в mobil версии и кнопка корзины-->
+
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
+                    class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span
+                    class="icon-bar"> </span> <span class="icon-bar"> </span></button>
+<!--Спрятали кнопку корзины в mobil версии-->
+              {% if hidden_small_basket != '/orders/basket/' %}
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"><i
+                    class="fa fa-shopping-cart colorWhite"> </i> <span
+                    class="cartRespons colorWhite">  Корзина( <span class="basket_total_nmb">
+            {{ products_nmb }}</span> )</span></button>
+                {% endif %}
+<!--///////////////////-->
+
+            <a class="navbar-brand " href=""> <img src="" alt="TSHOP"> </a>
+
+        </div>
+
+        <div class="navbar-cart  collapse basket-container">
+            <div class="cartMenu  col-lg-4 col-xs-12 col-md-4 ">
+                <div class="w100 miniCartTable scroll-pane basket-item">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <table class="new-products-list-in-basket">
+                            <tbody>
+                            {% if basket_products_list %}
+                            {% for bpl in basket_products_list %}
+                            <tr class="miniCartProduct">
+                                <td style="width:20%" class="miniCartProductThumb">
+                                    <div><img src="{{ bpl.image.url }}"
+                                              alt="img"></div>
+                                </td>
+                                <td style="width:35%">
+                                    <div class="miniCartDescription">
+                                        <h4><a href=""> {{ bpl.product.name }} </a></h4>
+                                    </div>
+                                </td>
+                                <td style="width:15%">
+                                    <div
+                                            class="miniCartDescription"><h4><a href="">{{ bpl.color.name }}</a></h4></div>
+                                </td>
+
+                                <td style="width:15%" class="miniCartQuantity"><a> {{ bpl.nmb }} шт. </a></td>
+                                <td style="width:15%" class="miniCartSubtotal"><span>    {{ bpl.total_price }} </span></td>
+                                <td style="width:5%"
+                                    class="delete"><b><input type="button"
+                                                             class="del-product-item" value="х"
+                                                             data-product_id='{{  bpl.product.id }}'
+                                                             data-url_action="{% url 'delete_small_basket_position' %}"
+                                                             data-product_color_id='{{  bpl.color.id }}'></b></td>
+                            </tr>
+
+                            {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+
+                <div class="miniCartFooter  miniCartFooterInMobile text-right">
+                    <h3 class="text-right subtotal basket-total-price"> ОБЩАЯ СУММА: {{ basket_total_price }}.00 руб. </h3>
+                    <a class="btn btn-sm btn-danger" href=""> <i class="fa fa-shopping-cart"> </i> VIEW CART
+                    </a> <a href="checkout-0.html"
+                            class="btn btn-sm btn-primary"> CHECKOUT </a></div>
+
+
+            </div>
+
+        </div>
+
+<!--  Конец малая корзина в mobil версии-->
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+                <li class="{% if  active_ancer == 'home' %}active{% endif %}">
+                    <a href="/">Главная</a></li>
+
+                <li class="{% if  active_ancer == 'basket' %}active{% endif %}"><a href="{% url 'show_basket'  %}"> КОРЗИНА</a></li>
+
+                <li class=""><a href=""> CHECKOUT</a>
+                </li>
+
+
+                <li class="dropdown megamenu-fullwidth"><a  href="#">
+                    PAGES </a>
+
+                </li>
+                <li><a href="all-page-link.html" target="_blank"> All Page Link </a></li>
+            </ul>
+
+<!-- в большой корзине скрываем малую корзины-->
+            {% if hidden_small_basket != '/orders/basket/' %}
+<!--            ///////////////////////-->
+            <div class="nav navbar-nav navbar-right hidden-xs basket-container">
+                <div class="dropdown  cartMenu "><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i
+                        class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Корзина( <span class="basket_total_nmb">
+                {{ products_nmb }}</span> )
+                </span> <b
+                        class="caret"> </b> </a>
+
+                    <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 basket-block">
+                        <div class="w100 miniCartTable scroll-pane basket-item">
+
+
+                            <form method="POST" class="basket_small">
+                                {% csrf_token %}
+                                <table class="new-products-list-in-basket">
+                                    <tbody>
+
+                                    {% if basket_products_list %}
+                                    {% for bpl in basket_products_list %}
+
+                                    <tr class="miniCartProduct ">
+                                        <td style="width:20%" class="miniCartProductThumb">
+                                            <div><img src="{{ bpl.image.url }}"
+                                                      alt="img"></div>
+                                        </td>
+                                        <td style="width:35%">
+                                            <div class="miniCartDescription">
+                                                <h4><a href=""> {{ bpl.product.name }} </a></h4>
+                                            </div>
+                                        </td>
+                                        <td style="width:15%">
+                                            <div
+                                                    class="miniCartDescription"><h4><a href="">{{ bpl.color.name }}</a></h4></div>
+                                        </td>
+
+                                        <td style="width:15%" class="miniCartQuantity"><a> {{ bpl.nmb }} шт. </a></td>
+                                        <td style="width:15%" class="miniCartSubtotal"><span>    {{ bpl.total_price }} </span></td>
+                                        <td style="width:5%"
+                                            class="delete"><b><input type="button" id="del-product-item-{{ bpl.product.id}}"
+                                                                     class="del-product-item" value="х"
+                                                                     data-product_id='{{  bpl.product.id }}'
+                                                                     data-url_action="{% url 'delete_small_basket_position' %}"
+                                                                     data-product_color_id='{{  bpl.color.id }}'></b></td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="miniCartFooter text-right">
+                            <h3 class="text-right subtotal basket-total-price"> ОБЩАЯ СУММА: {{ basket_total_price }}.00 руб. </h3>
+                            <a class="btn btn-sm btn-danger" href="cart.html"> <i class="fa fa-shopping-cart"> </i> VIEW
+                                CART </a><a
+                                class="btn btn-sm btn-primary"> CHECKOUT </a></div>
+
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+</div>

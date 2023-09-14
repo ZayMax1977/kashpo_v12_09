@@ -1,0 +1,241 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container main-container headerOffset">
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb links-dev">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="category.html">MEN COLLECTION</a></li>
+                <li><a href="sub-category.html">TSHIRT</a></li>
+                <li class="active">Lorem ipsum dolor sit amet</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row transitionfx">
+
+        <!-- left column -->
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <!-- product Image and Zoom -->
+            <div class="main-image sp-wrap col-lg-12 no-padding">
+                {% for image_item in product.productimage_set.all %}
+                <div class="product-image-item ">
+                    <img src="{{ image_item.image.url }}" class="img-fluid">
+                </div>
+                {% endfor %}
+
+                <!--                <a href="images/product_details/hi-res-croped/1.jpg"><img-->
+                <!--                        src="images/product_details/low-res-white/1.jpg" class="img-responsive" alt="img"></a>-->
+                <!--                <a href="images/product_details/hi-res-croped/2.jpg"><img-->
+                <!--                        src="images/product_details/low-res-white/2.jpg" class="img-responsive" alt="img"></a>-->
+                <!--                <a href="images/product_details/hi-res-croped/3.jpg"><img-->
+                <!--                        src="images/product_details/low-res-white/3.jpg" class="img-responsive" alt="img"></a>-->
+            </div>
+        </div>
+        <!--/ left column end -->
+
+        <!-- right column -->
+        <div class="col-lg-6 col-md-6 col-sm-5">
+            <h1 class="product-title"> {{ product.name }}</h1>
+            <h3 class="product-code">Product ID: {{product.id}}</h3>
+
+            <!--            <div class="clear"></div>-->
+            <div>
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active tab-dev"><a href="#description" aria-controls="description" role="tab" class=""
+                                                                      data-toggle="tab">Описание</a></li>
+                    <li role="presentation"><a href="#delivery" aria-controls="delivery" role="tab" data-toggle="tab">Доставка</a></li>
+                    <li role="presentation"><a href="#paymant" aria-controls="paymant" role="tab" data-toggle="tab">Оплата</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content product-description-tabs">
+                    <div role="tabpanel" class="tab-pane active" id="description">
+                        {{ product.description }}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="delivery">
+                        Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют
+                        потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и
+                        пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш
+                        текст.." Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по
+                        умолчанию, так что поиск по ключевым словам
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="paymant">Aldus Corporation, которая впоследствии объединилась с Adobe Systems,
+                        помогли принести Lorem Ipsum в информационную эпоху с ее 1985 флагманского программного обеспечения Aldus PageMaker.
+                        Программа входит в комплект с Lorem Ipsum манекен текст, чтобы помочь с выложив содержимое страницы и другие
+                        текстовые процессоры, такие как Microsoft Word последовали его примеру. В последнее время рост
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="product-price"><span class="price-sales"> {{product.price}} RUB </span>
+                {% if product.discount > 0 %}
+                <span class="price-standard">{{ product.price_without_discount}} RUB</span>
+                {% endif %}
+            </div>
+<!--id="form_buying_product"-->
+            <form   action="{% url 'basket_adding' %}" id="form_id_big_card_{{product.id}}">
+                {% csrf_token %}
+                <div class="productFilter productFilterLook2">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-xs-6">
+                          <label for="number" class="card-label-color">Выберите количество:</label>
+
+                            <input type="number" class="form-control" name="number" id="number" value=1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 ">
+                            <label for="product_color" class="card-label-color">Выберите цвет:</label>
+
+                            <select name="product-color" id="product_color" class="form-control">
+                                 <option value="18">Любой</option>
+                        <option value="17">Вишня</option>
+                        <option value="15">Орех</option>
+                        <option value="16">Дуб Омбре</option>
+                        <option value="14">Дуб</option>
+                        <option value="13">Индийское дерево</option>
+                        <option value="12">Венге</option>
+                        <option value="11">Бронза</option>
+                        <option value="10">Белый</option>
+
+                            </select></div>
+                    </div>
+                </div>
+                <div class="cart-actions">
+                    <div class="addto row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <button type="submit"  class="button  btn-cart cart first btn-add-to-card"
+                                    title="Добавить в корзину"
+                                    id="submit_btn"
+                                    data-product_id='{{  product.id }}'
+                                    data-product_name='{{  product.name }}'
+                                    data-product_price='{{  product.price }}'
+                                    data-form_id="form_id_big_card_{{product.id}}"
+                                    data-product_image='{{ product.productimage_set.all.0.image.url }}'
+                            >Добавить в
+                                корзину
+
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row recommended">
+        <h1> YOU MAY ALSO LIKE </h1>
+
+        <div id="SimilarProductSlider">
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">YOUR LIFE</a></h4>
+
+                        <div class="price"><span>$57</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">RED CROWN</a></h4>
+
+                        <div class="price"><span>$44</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">WHITE GOLD</a></h4>
+
+                        <div class="price"><span>$35</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">DENIM 4240</a></h4>
+
+                        <div class="price"> $<span>55</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">CROWN ROCK</a></h4>
+
+                        <div class="price"><span>$500</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">SLIM ROCK</a></h4>
+
+                        <div class="price"><span>$50 </span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">ROCK T-Shirts </a></h4>
+
+                        <div class="price"><span>$130</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+
+            <div class="item">
+                <div class="product"><a class="product-image"> <img src="" alt="img"> </a>
+
+                    <div class="description">
+                        <h4><a href="san-remo-spaghetti">Denim T-Shirts </a></h4>
+
+                        <div class="price"><span>$43</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+        </div>
+        <!--/.recommended-->
+
+    </div>
+    <div style="clear:both"></div>
+</div>
+{% endblock %}

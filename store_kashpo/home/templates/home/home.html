@@ -1,0 +1,58 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="section-top">
+    <img src="{% static 'img/top-img.png' %}" class="img-fluid">
+</div>
+<div class="section section1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center">Кашпо для цветов</h1>
+            </div>
+            {% for p_i in products_images_kashpo %}
+           {% include 'home/product_item.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="section section-delivery">
+    <div>
+        <h3>Какая-то акция</h3>
+
+    </div>
+</div>
+
+<div class="section section2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center">Мебель из металла</h1>
+            </div>
+            {% for p_i in products_images_stoyka %}
+            {% include 'home/product_item.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="section section3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center">Цветочные стойки</h1>
+            </div>
+            {% for p_i in products_images_furniture %}
+            {% include 'home/product_item.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+.links-dev{
+    border-radius:0;
+}
+.btn-add-to-card{
+    border-radius:0;
+
+}
+.btn-add-to-card:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.product-description-tabs{
+    padding: 10px;
+}
+.product-image-item{
+    margin-bottom:10px;
+}
+
+.product-image-item > img{
+width: 100%;
+
+}

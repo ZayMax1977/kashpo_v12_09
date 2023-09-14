@@ -1,0 +1,185 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/basket.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container main-container headerOffset">
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="category.html">Category</a></li>
+                <li class="active">Cart</li>
+            </ul>
+        </div>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7 col-xs-6 col-xxs-12 text-center-xs">
+            <h1 class="section-title-inner"><span><i class="glyphicon glyphicon-shopping-cart"></i> Корзина товаров </span></h1>
+
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-5 rightSidebar col-xs-6 col-xxs-12 text-center-xs">
+            <h4 class="caps"><a href="category.html"><i class="fa fa-chevron-left"></i> &#9668; На Главную </a></h4>
+        </div>
+    </div>
+     <div class="form-group">
+                                        <label class="col-md-4 control-label" for="textinput">Text Input</label>
+
+                                        <div class="col-md-4">
+                                            <input id="textinput" name="textinput" placeholder="placeholder" class="form-control input-md" type="text">
+                                            <span class="help-block">help</span></div>
+                                    </div>
+    <!--/.row-->
+<!--<form method="POST" action="{% url 'checkout' %}">-->
+<!--    {% csrf_token %}-->
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <div class="row userInfo">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="cartContent w100">
+
+                        <table class="cartTable table-responsive new-products-list-in-basket" style="width:100%">
+
+                            <thead>
+                                <tr class="CartProduct cartTableHeader">
+                                    <td style="width:15%"> Продукт</td>
+                                    <td style="width:40%">Детали</td>
+                                    <td style="width:10%" class="delete">&nbsp;X</td>
+                                    <td style="width:10%">Кол-во</td>
+
+                                    <td style="width:15%">Всего</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% if products_in_basket %}
+                            {% for pib in products_in_basket %}
+
+                            <tr class="CartProduct">
+                                <td class="CartProductThumb">
+                                    <div><a href="product-details.html"><img src="{{ pib.image.url }}" alt="img"></a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="CartDescription">
+                                        <h4><a href="product-details.html" class="product-name">{{pib.product_name}} </a></h4>
+
+                                        <span class="color">{{ pib.color }}</span>
+
+                                        <div class="price"><span class="pro-pr">{{ pib.price_per_item }} руб.</span></div>
+
+                                    </div>
+                                </td>
+                                <td
+                                        class="delete"><a title="Удалить всю позицию" class="delete-position"
+                                data-product_id = '{{  pib.product.id }}'
+                                data-product_color_id = '{{  pib.color.id }}'
+                                data-url_action="{% url 'delete_big_basket_position' %}"
+                                data-csrf="{{ csrf_token }}">
+
+                                    <i class="glyphicon glyphicon-trash fa-2x"></i></a></td>
+
+                                <td><input class="quanitySniper" type="text" value="{{ pib.nmb }}" name="product_{{ pib.id }}"
+                                           id="quanitySniper_{{pib.product_id}}_{{pib.color.id}}"
+                                data-product_id = '{{  pib.product.id }}'
+                                    data-product_color_id = '{{  pib.color.id }}'
+                                           data-url_action="{% url 'show_basket' %}"
+
+                                data-csrf="{{ csrf }}">
+                               </td>
+
+                                <td class="price total-price-line">{{ pib.total_price}}</td>
+                            </tr>
+
+                            {% endfor %}
+{% endif %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!--cartContent-->
+
+                    <div class="cartFooter w100">
+                        <div class="box-footer">
+<!--                            <div class="pull-right">-->
+<!--                                <button type="submit" class="btn btn-default"><i class="fa fa-undo"></i> &nbsp; Применить-->
+<!--                                </button>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                    <!--/ cartFooter -->
+
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5 rightSidebar">
+            <div class="contentBox">
+                <div class="w100 costDetails">
+                    <div class="table-block" id="order-detail-content">
+<!--                        <a class="btn btn-primary btn-lg btn-block " title="checkout" href="{% url 'checkout' %}" style="margin-bottom:20px">-->
+<!--                            Заказать-->
+<!--                        &nbsp; <i class="fa fa-arrow-right"></i> </a>-->
+
+                        <form method="post" action="{% url 'checkout' %}">
+                            {% csrf_token %}
+                        <input type="submit" value="Заказать" class="btn btn-primary btn-lg btn-block ">
+                         </form>
+
+                            <div class="w100 cartMiniTable">
+
+                            <table id="cart-summary" class="std table">
+                                <tbody>
+                                <tr>
+                                    <td class="price">Общая:</td>
+
+                                    <td class="price " id="common_price">
+                                        {% if  basket_total_price  %}
+                                        {{ basket_total_price }}
+                                        {% else %}
+                                        0
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Доставка:</td>
+                                    <td><span class="success">Free shipping!</span></td>
+                                </tr>
+
+
+                                <tr>
+                                    <td> Total</td>
+                                    <td class=" site-color" id="total-price">$216.51</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="input-append couponForm">
+                                            <input class="col-lg-8" id="appendedInputButton" type="text" placeholder="Coupon code">
+                                            <button class="col-lg-4 btn btn-success" type="button">Apply!</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--  </form>-->
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+{% endblock %}
